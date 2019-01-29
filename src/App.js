@@ -1,28 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {Router, withRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
+import {bindActionCreators} from 'redux';
+import { connect } from "react-redux";
+
+// Import actions
+import {getProfile} from './redux/actions';
+
+// Import components
+import LoginForm from './components/loginForm'
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      const { fetching, getProfile, error } = this.props;
+
+      return (
+          <div className="App">
+             {/* <Router>
+                  <Switch>
+                      <Route exact path={'/'} rel="alternate" hrefLang="x"
+                             component= {<LoginForm />}
+                      />
+                </Switch>
+              </Router>*/}
+
+              {fetching ? (
+                  <button disabled>Fetching...</button>
+              ) : (
+                  <button onClick={getProfile}>Get a user</button>
+              )}
+
+              {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+
+          </div>
+      );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        fetching: state.fetching,
+        error: state.error,
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getProfile: bindActionCreators(getProfile, dispatch),
+    };
+};
+
+export default (connect(mapStateToProps, mapDispatchToProps)(App));

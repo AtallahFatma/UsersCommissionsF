@@ -26,7 +26,7 @@ class LoginForm extends Component {
                     <Button variant="primary" disabled>Fetching...</Button>
                 ) : (
                     <Button variant="primary" type="submit" onClick={getProfile}>
-                        Submit
+                        Log in
                     </Button>
                 )}
                 {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}

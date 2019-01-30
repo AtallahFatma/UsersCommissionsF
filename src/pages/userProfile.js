@@ -2,18 +2,20 @@ import React, {Component} from 'react';
 import {Table} from 'react-bootstrap'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getProfile} from "../redux/actions/userActions";
+import {getProfile, getCommissions} from "../redux/actions/userActions";
 import { Redirect } from 'react-router'
+import {map} from 'lodash';
 
 class UserProfile extends Component {
 
     constructor(props) {
         super(props);
-        this.props.getProfile(this.props.userId)
+        this.props.getProfile(this.props.userId);
+        this.props.getCommissions(this.props.userId);
     }
 
     render() {
-        const { user } = this.props;
+        const { user, commissions } = this.props;
         
         return (
             <div>
@@ -41,6 +43,33 @@ class UserProfile extends Component {
                         </tbody>
                     </Table>
                 }
+                {
+                    commissions &&
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Cashback</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            Object.keys(commissions).map((key, index) => {
+                                return (
+                                    <tr key={index}>
+                                        {map(commissions[key], function(elem, index) {
+                                            return (
+                                                <th key={index}>
+                                                    {elem}
+                                                </th>);
+                                        })}
+                                    </tr>
+                                );
+                            })
+                        }
+                        </tbody>
+                    </Table>
+                }
             </div>
         );
     }
@@ -50,12 +79,14 @@ const mapStateToProps = state => {
     return {
         user: state.user,
         userId: state.userId,
+        commissions: state.commissions,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getProfile: bindActionCreators(getProfile, dispatch),
+        getCommissions: bindActionCreators(getCommissions, dispatch),
     };
 };
 

@@ -1,5 +1,7 @@
 import {takeEvery,all, call,  } from "redux-saga/effects";
 import {
+    API_GET_COMMISSIONS,
+    API_GET_COMMISSIONS_FAILURE, API_GET_COMMISSIONS_SUCCESS,
     API_GET_USER,
     API_GET_USER_FAILURE,
     API_GET_USER_SUCCESS, API_USER_LOGIN,
@@ -48,6 +50,17 @@ function* userLoginSaga(params) {
     });
 }
 
+function* getCommissionsSaga(params) {
+    const url = "/commissions/"+params['params'];
+    const response = yield call(ApiUtils.getApi, url);
+    yield call(ApiUtils.parseApiResult, response, {
+        action: API_GET_COMMISSIONS_SUCCESS,
+        payload: response.data
+    }, {
+        action: API_GET_COMMISSIONS_FAILURE,
+    });
+}
+
 // watcher saga: watches for actions dispatched to the store, starts worker saga
 function* watcherGetUser() {
     yield takeEvery(API_GET_USER, getUserSaga);
@@ -61,10 +74,16 @@ function* watcherLogin() {
     yield takeEvery(API_USER_LOGIN, userLoginSaga);
 }
 
+
+function* watcherGetCommissions() {
+    yield takeEvery(API_GET_COMMISSIONS, getCommissionsSaga);
+}
+
 export default function* rootSaga() {
     yield all([
         watcherGetUser(),
         watcherRegister(),
-        watcherLogin()
+        watcherLogin(),
+        watcherGetCommissions()
     ])
 }

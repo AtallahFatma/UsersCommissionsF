@@ -1,6 +1,8 @@
-import {API_GET_USER,
+import {
+    API_GET_COMMISSIONS, API_GET_USER,
     API_USER_LOGIN,
-    API_USER_REGISTER} from '../ActionsTypes'
+    API_USER_REGISTER
+} from '../ActionsTypes'
 
 /**
  * return the current user profile
@@ -29,5 +31,15 @@ export function userLogin(data) {
     return {
         type: API_USER_LOGIN,
         params: data
+    };
+}
+
+/**
+ * return commission by user
+ */
+export function getCommissions(id) {
+    return {
+        type: API_GET_COMMISSIONS,
+        params: id
     };
 }

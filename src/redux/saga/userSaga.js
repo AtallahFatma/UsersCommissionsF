@@ -12,8 +12,8 @@ import {
 import * as ApiUtils from './apiUtils';
 
 // worker saga: makes the api call when watcher saga sees the action
-function* getUserSaga() {
-    const url = "/user/50";
+function* getUserSaga(params) {
+    const url = "/user/"+params.id;
     const response = yield call(ApiUtils.getApi, url);
     yield call(ApiUtils.parseApiResult, response, {
         action: API_GET_USER_SUCCESS,

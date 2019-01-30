@@ -21,12 +21,13 @@ const initialState = {
     userId: null,
     loggingIn: false,
     loginFailure: null,
+    loginSuccess: null,
 };
 
 // set user information if user/{userId} called
 const setUserInformations = (state, action) => {
     let newState = Object.assign({}, state);
-    newState.user = action.user;
+    newState.user = action.payload;
     newState.fetching = false;
     return newState;
 };
@@ -34,10 +35,10 @@ const setUserInformations = (state, action) => {
 // set user user Id after login
 const setUserID = (state, action) => {
     let newState = Object.assign({}, state);
-    console.log(action);
     newState.userId = action.payload.userId;
     newState.loggingIn = false;
     newState.registerFailure = false;
+    newState.loginSuccess = true;
     return newState;
 };
 
@@ -62,7 +63,7 @@ export function reducer(state = initialState, action) {
         case API_USER_LOGIN_SUCCESS:
             return setUserID(state, action);
         case API_USER_LOGIN_FAILURE:
-            return { ...state, loggingIn: false, userId: null, loginFailure: true};
+            return { ...state, loggingIn: false, userId: null, loginSuccess: false, loginFailure: true};
         default:
             return state;
     }

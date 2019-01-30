@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Form, Button} from 'react-bootstrap'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {userLogin} from "../redux/actions";
+import {userLogin} from "../redux/actions/userActions";
+import { Redirect } from 'react-router'
 
 class LoginForm extends Component {
 
@@ -18,10 +19,7 @@ class LoginForm extends Component {
     }
 
     handleChange(e) {
-        this.setState({[e.target.name]: e.target.value},
-            () => {
-                console.log('state',this.state);
-            });
+        this.setState({[e.target.name]: e.target.value});
     }
 
     handleLogin(event) {
@@ -29,7 +27,7 @@ class LoginForm extends Component {
         event.preventDefault();
     }
     render() {
-        const { loggingIn, loginFailure } = this.props;
+        const { loggingIn, loginFailure, loginSuccess} = this.props;
         return (
             <Form onSubmit={this.handleLogin}>
                 <h1>Login</h1>
@@ -59,6 +57,7 @@ class LoginForm extends Component {
                     </Button>
                 )}
                 {loginFailure && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+                {loginSuccess &&  <Redirect to='user' />}
             </Form>
         );
     }
@@ -68,6 +67,7 @@ const mapStateToProps = state => {
     return {
         loggingIn: state.loggingIn,
         loginFailure: state.loginFailure,
+        loginSuccess: state.loginSuccess,
     };
 };
 

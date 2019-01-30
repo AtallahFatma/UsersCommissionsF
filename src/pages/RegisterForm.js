@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Form, Button, Col} from 'react-bootstrap'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {addUser} from "../redux/actions";
+import {addUser} from "../redux/actions/userActions";
 
 class RegisterForm extends Component {
 

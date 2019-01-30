@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions,no-undef */
 import {put} from 'redux-saga/effects';
 
 const urlBack = "http://127.0.0.1:8000";
@@ -52,7 +53,6 @@ export function* parseApiResult(response, success, error) {
                     });
                 }
             }
-            //successRoute ? yield put(RouterActions.changeRoute(successRoute)) : '';
             break;
         default:
             console.log('default');

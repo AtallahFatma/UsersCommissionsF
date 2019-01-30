@@ -1,6 +1,6 @@
 import {API_GET_USER,
     API_USER_LOGIN,
-    API_USER_REGISTER} from './ActionsTypes'
+    API_USER_REGISTER} from '../ActionsTypes'
 
 /**
  * return the current user profile

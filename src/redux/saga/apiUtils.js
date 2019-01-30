@@ -2,12 +2,6 @@ import {put} from 'redux-saga/effects';
 
 const urlBack = "http://127.0.0.1:8000";
 
-export const headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-};
-
-
 export const getApi = (url) => {
     const result = fetch(urlBack + url, {
         method: 'GET',

@@ -2,7 +2,9 @@ import {takeEvery,all, call,  } from "redux-saga/effects";
 import {
     API_GET_USER,
     API_GET_USER_FAILURE,
-    API_GET_USER_SUCCESS,
+    API_GET_USER_SUCCESS, API_USER_LOGIN,
+    API_USER_LOGIN_FAILURE,
+    API_USER_LOGIN_SUCCESS,
     API_USER_REGISTER,
     API_USER_REGISTER_FAILURE,
     API_USER_REGISTER_SUCCESS
@@ -32,7 +34,18 @@ function* addUserSaga(params) {
     }, {
         action: API_USER_REGISTER_FAILURE,
     });
+}
 
+function* userLoginSaga(params) {
+    const url = "/user/login";
+    const body = params['params'];
+    const response = yield call(ApiUtils.postApi, url, body);
+    yield call(ApiUtils.parseApiResult, response, {
+        action: API_USER_LOGIN_SUCCESS,
+        payload: response.data
+    }, {
+        action: API_USER_LOGIN_FAILURE,
+    });
 }
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga
@@ -44,9 +57,14 @@ function* watcherRegister() {
     yield takeEvery(API_USER_REGISTER, addUserSaga);
 }
 
+function* watcherLogin() {
+    yield takeEvery(API_USER_LOGIN, userLoginSaga);
+}
+
 export default function* rootSaga() {
     yield all([
         watcherGetUser(),
-        watcherRegister()
+        watcherRegister(),
+        watcherLogin()
     ])
 }

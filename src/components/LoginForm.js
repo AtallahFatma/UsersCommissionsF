@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {userLogin} from "../redux/actions/userActions";
 import { Redirect } from 'react-router'
+import PropTypes from 'prop-types';
 
 class LoginForm extends Component {
 
@@ -75,6 +76,13 @@ const mapDispatchToProps = dispatch => {
     return {
         userLogin: bindActionCreators(userLogin, dispatch),
     };
+};
+
+LoginForm.propTypes = {
+    userLogin: PropTypes.func,
+    loginFailure: PropTypes.bool,
+    loggingIn: PropTypes.bool,
+    loginSuccess: PropTypes.bool,
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(LoginForm));

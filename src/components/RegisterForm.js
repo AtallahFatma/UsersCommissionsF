@@ -3,6 +3,7 @@ import {Form, Button, Col} from 'react-bootstrap'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {addUser} from "../redux/actions/userActions";
+import PropTypes from "prop-types";
 
 class RegisterForm extends Component {
 
@@ -24,7 +25,7 @@ class RegisterForm extends Component {
     }
 
     handleSubmit(event) {
-        this.props.addUser(this.state)
+        this.props.addUser(this.state);
         event.preventDefault();
     }
 
@@ -87,6 +88,12 @@ const mapDispatchToProps = dispatch => {
     return {
         addUser: bindActionCreators(addUser, dispatch),
     };
+};
+
+RegisterForm.propTypes = {
+    addUser: PropTypes.func,
+    registerFailure: PropTypes.bool,
+    addingUser: PropTypes.bool,
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(RegisterForm));

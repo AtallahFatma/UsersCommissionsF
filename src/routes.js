@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import User from './pages/userProfile'
+import User from './components/userProfile'
 import Home from './pages/Home'
 
 export default function MainRouter () {

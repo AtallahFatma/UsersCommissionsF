@@ -5,6 +5,7 @@ import {bindActionCreators} from "redux";
 import {getProfile, getCommissions} from "../redux/actions/userActions";
 import { Redirect } from 'react-router'
 import {map} from 'lodash';
+import PropTypes from "prop-types";
 
 class UserProfile extends Component {
 
@@ -89,6 +90,14 @@ const mapDispatchToProps = dispatch => {
         getProfile: bindActionCreators(getProfile, dispatch),
         getCommissions: bindActionCreators(getCommissions, dispatch),
     };
+};
+
+UserProfile.propTypes = {
+    getProfile: PropTypes.func,
+    getCommissions: PropTypes.func,
+    user: PropTypes.object,
+    userId: PropTypes.number,
+    commissions: PropTypes.array,
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(UserProfile));

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Login from './LoginForm'
-import Register from './RegisterForm'
+import Login from '../components/LoginForm'
+import Register from '../components/RegisterForm'
 
 import {Container, Row, Col} from 'react-bootstrap'
 class Home extends Component {

@@ -3,6 +3,7 @@ import {put} from 'redux-saga/effects';
 
 const urlBack = "http://127.0.0.1:8000";
 
+//Call GET Api
 export const getApi = (url) => {
     const result = fetch(urlBack + url, {
         method: 'GET',
@@ -14,6 +15,7 @@ export const getApi = (url) => {
     return result;
 };
 
+// call POST API
 export const postApi = (url, body) => {
     let jsonBody = body ? JSON.stringify(body) : {};
     return fetch(urlBack + url, {
@@ -26,6 +28,7 @@ export const postApi = (url, body) => {
     });
 };
 
+// parse promise to Json
 export function* parseApiResult(response, success, error) {
     const successAction = success.action;
 

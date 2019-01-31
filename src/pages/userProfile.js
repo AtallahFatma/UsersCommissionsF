@@ -50,6 +50,7 @@ class UserProfile extends Component {
                         <tr>
                             <th>Id</th>
                             <th>Cashback</th>
+                            <th>Date</th>
                         </tr>
                         </thead>
                         <tbody>

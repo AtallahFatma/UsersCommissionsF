@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
 import {Table} from 'react-bootstrap'
 import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {getProfile, getCommissions} from "../redux/actions/userActions";
 import { Redirect } from 'react-router'
 import {map} from 'lodash';
-import PropTypes from "prop-types";
 
 class UserProfile extends Component {
 
     constructor(props) {
         super(props);
-        this.props.getProfile(this.props.userId);
-        this.props.getCommissions(this.props.userId);
+        this.props.getUser(this.props.userId);
+       // this.props.getCommissions(this.props.userId);
     }
 
     render() {
@@ -77,27 +74,18 @@ class UserProfile extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ user }) => {
     return {
-        user: state.user,
-        userId: state.userId,
-        commissions: state.commissions,
+        user: user.user,
+        userId: user.userId,
+        commissions: user.commissions,
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = ({ user }) => {
     return {
-        getProfile: bindActionCreators(getProfile, dispatch),
-        getCommissions: bindActionCreators(getCommissions, dispatch),
+        getUser: user.getUser,
     };
-};
-
-UserProfile.propTypes = {
-    getProfile: PropTypes.func,
-    getCommissions: PropTypes.func,
-    user: PropTypes.object,
-    userId: PropTypes.number,
-    commissions: PropTypes.array,
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(UserProfile));

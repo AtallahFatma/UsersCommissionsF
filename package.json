@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rematch/core": "^1.0.6",
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",

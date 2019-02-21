@@ -1,12 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent } from 'react';
 import {Form, Button} from 'react-bootstrap'
 import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {userLogin} from "../redux/actions/userActions";
 import { Redirect } from 'react-router'
-import PropTypes from 'prop-types';
 
-class LoginForm extends Component {
+class LoginForm extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -24,11 +21,11 @@ class LoginForm extends Component {
     }
 
     handleLogin(event) {
-        this.props.userLogin(this.state);
+        this.props.login(this.state);
         event.preventDefault();
     }
     render() {
-        const { loggingIn, loginFailure, loginSuccess} = this.props;
+        //const { loggingIn, loginFailure, loginSuccess} = this.props;
         return (
             <Form onSubmit={this.handleLogin}>
                 <h1>Login</h1>
@@ -50,39 +47,34 @@ class LoginForm extends Component {
                                   onChange={this.handleChange} />
                 </Form.Group>
 
-                {loggingIn ? (
+               {this.props.user.loggingIn ? (
                     <Button variant="primary" disabled>Fetching...</Button>
                 ) : (
-                    <Button variant="primary" type="submit">
-                        Log in
-                    </Button>
+                <Button variant="primary" type="submit">
+                    Log in
+                </Button>
                 )}
-                {loginFailure && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
-                {loginSuccess &&  <Redirect to='user' />}
+
+                 {/*  {loginFailure && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}  */}
+                {this.props.user.loginSuccess &&  <Redirect to='user' />}
             </Form>
         );
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ user }) => {
     return {
-        loggingIn: state.loggingIn,
-        loginFailure: state.loginFailure,
-        loginSuccess: state.loginSuccess,
+       user
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = ({ user }) => {
+    console.log('user', user);
+
     return {
-        userLogin: bindActionCreators(userLogin, dispatch),
+        login: user.login,
     };
 };
 
-LoginForm.propTypes = {
-    userLogin: PropTypes.func,
-    loginFailure: PropTypes.bool,
-    loggingIn: PropTypes.bool,
-    loginSuccess: PropTypes.bool,
-};
 
 export default (connect(mapStateToProps, mapDispatchToProps)(LoginForm));
